@@ -19,6 +19,16 @@ func ParseString(num *int, Set string) string {
 	*num = i
 	return str
 }
+func ParseNumber(num *int, Set string) string {
+	i := *num
+	var str string
+	for i < len(Set) && (unicode.IsDigit(rune(Set[i]))) {
+		str = str + string(Set[i])
+		i++
+	}
+	*num = i
+	return str
+}
 
 func Lex(Set string) []Token {
 	var Tokens []Token
@@ -29,6 +39,9 @@ func Lex(Set string) []Token {
 		} else if unicode.IsLetter(rune(Set[i])) || Set[i] == '_' {
 			str := ParseString(&i, Set)
 			Tokens = append(Tokens, Token{"IDENT", str})
+		} else if unicode.IsDigit(rune(Set[i])) {
+			num := ParseNumber(&i, Set)
+			Tokens = append(Tokens, Token{"NUMBER", num})
 		} else {
 			i++
 		}
