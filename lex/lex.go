@@ -10,6 +10,9 @@ type Token struct {
 }
 
 func ParseString(num *int, Set string) string {
+
+}
+func ParseIdent(num *int, Set string) string {
 	i := *num
 	var str string
 	for i < len(Set) && (unicode.IsLetter(rune(Set[i])) || unicode.IsDigit(rune(Set[i])) || Set[i] == '_') {
@@ -27,7 +30,6 @@ func ParseNumber(num *int, Set string) string {
 		if Set[i] == '.' && decimal == false {
 			decimal = true
 			str = str + string(Set[i])
-
 			i++
 		} else {
 			str = str + string(Set[i])
@@ -47,11 +49,13 @@ func Lex(Set string) []Token {
 			i++
 			continue
 		} else if unicode.IsLetter(rune(Set[i])) || Set[i] == '_' {
-			str := ParseString(&i, Set)
+			str := ParseIdent(&i, Set)
 			Tokens = append(Tokens, Token{"IDENT", str})
 		} else if unicode.IsDigit(rune(Set[i])) {
 			num := ParseNumber(&i, Set)
 			Tokens = append(Tokens, Token{"NUMBER", num})
+		} else if rune(Set[i]) == '"' {
+			str := ParseString(&i, Set)
 		} else {
 			i++
 		}
