@@ -50,7 +50,18 @@ func ParseNumber(num *int, Set string) string {
 	*num = i
 	return str
 }
-
+func IdentOrKeyWord(str string) Token {
+	switch str {
+	case "func":
+		{
+			return Token{"FUNC", ""}
+		}
+	default:
+		{
+			return Token{"IDENT", str}
+		}
+	}
+}
 func Lex(Set string) []Token {
 	var Tokens []Token
 	for i := 0; i < len(Set); {
@@ -59,7 +70,7 @@ func Lex(Set string) []Token {
 			continue
 		} else if unicode.IsLetter(rune(Set[i])) || Set[i] == '_' {
 			str := ParseIdent(&i, Set)
-			Tokens = append(Tokens, Token{"IDENT", str})
+			Tokens = append(Tokens, IdentOrKeyWord(str))
 		} else if unicode.IsDigit(rune(Set[i])) {
 			num := ParseNumber(&i, Set)
 			Tokens = append(Tokens, Token{"NUMBER", num})
