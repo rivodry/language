@@ -10,7 +10,16 @@ type Token struct {
 }
 
 func ParseString(num *int, Set string) string {
-
+	i := *num
+	i++
+	var str string
+	for i < len(Set) && (Set[i] != '"') {
+		str = str + string(Set[i])
+		i++
+	}
+	i++
+	*num = i
+	return str
 }
 func ParseIdent(num *int, Set string) string {
 	i := *num
@@ -56,6 +65,8 @@ func Lex(Set string) []Token {
 			Tokens = append(Tokens, Token{"NUMBER", num})
 		} else if rune(Set[i]) == '"' {
 			str := ParseString(&i, Set)
+			Tokens = append(Tokens, Token{"STRING", str})
+
 		} else {
 			i++
 		}
