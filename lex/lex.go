@@ -22,9 +22,19 @@ func ParseString(num *int, Set string) string {
 func ParseNumber(num *int, Set string) string {
 	i := *num
 	var str string
-	for i < len(Set) && (unicode.IsDigit(rune(Set[i]))) {
-		str = str + string(Set[i])
-		i++
+	var decimal bool
+	for i < len(Set) && (unicode.IsDigit(rune(Set[i])) || Set[i] == '.') {
+		if Set[i] == '.' && decimal == false {
+			decimal = true
+			str = str + string(Set[i])
+
+			i++
+		} else {
+			str = str + string(Set[i])
+
+			i++
+		}
+
 	}
 	*num = i
 	return str
