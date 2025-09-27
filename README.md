@@ -26,3 +26,9 @@ else then
    print(".....")
 end
 ```
+## While
+```
+while a==2 do
+   print("hi")
+end
+```
