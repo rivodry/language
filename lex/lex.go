@@ -56,6 +56,14 @@ func IdentOrKeyWord(str string) Token {
 		{
 			return Token{"FUNC", ""}
 		}
+	case "if":
+		{
+			return Token{"IF", ""}
+		}
+	case "while":
+		{
+			return Token{"WHILE", ""}
+		}
 	default:
 		{
 			return Token{"IDENT", str}
