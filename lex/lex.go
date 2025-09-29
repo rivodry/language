@@ -1,6 +1,7 @@
 package lex
 
 import (
+	"slices"
 	"unicode"
 )
 
@@ -80,6 +81,14 @@ func IdentOrKeyWord(str string) Token {
 		{
 			return Token{"DO", ""}
 		}
+	case "and":
+		{
+			return Token{"AND", ""}
+		}
+	case "or":
+		{
+			return Token{"OR", ""}
+		}
 
 	default:
 		{
@@ -102,6 +111,15 @@ func Lex(Set string) []Token {
 		} else if rune(Set[i]) == '"' {
 			str := ParseString(&i, Set)
 			Tokens = append(Tokens, Token{"STRING", str})
+
+		} else if slices.Contains([]rune{'(', ')'}, rune(Set[i])) {
+
+			Tokens = append(Tokens, Token{string(Set[i]), ""})
+			i++
+
+		} else if slices.Contains([]rune{'+', '-', '/', '*'}, rune(Set[i])) {
+			Tokens = append(Tokens, Token{string(Set[i]), ""})
+		} else if Set[i] == '=' {
 
 		} else {
 			i++
