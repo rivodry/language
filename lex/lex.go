@@ -136,6 +136,16 @@ func Lex(Set string) []Token {
 				Tokens = append(Tokens, Token{"!=", ""})
 				i += 2
 			}
+		} else if slices.Contains([]rune{'<', '>'}, rune(Set[i])) {
+			if i+1 < len(Set) && Set[i+1] == '=' {
+				Tokens = append(Tokens, Token{string(Set[i]) + "=", ""})
+				i += 2
+			} else {
+				Tokens = append(Tokens, Token{string(Set[i]), ""})
+				i++
+
+			}
+
 		} else {
 			i++
 		}
