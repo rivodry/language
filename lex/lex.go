@@ -80,6 +80,7 @@ func IdentOrKeyWord(str string) Token {
 		{
 			return Token{"DO", ""}
 		}
+
 	default:
 		{
 			return Token{"IDENT", str}
