@@ -89,6 +89,10 @@ func IdentOrKeyWord(str string) Token {
 		{
 			return Token{"OR", ""}
 		}
+	case "not":
+		{
+			return Token{"NOT", ""}
+		}
 
 	default:
 		{
