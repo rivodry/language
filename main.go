@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"lang/lex"
 	"lang/parser"
 	"os"
@@ -8,6 +10,8 @@ import (
 
 func main() {
 	a, _ := os.ReadFile(os.Args[1])
-	parser.Parse(lex.Lex(string(a)))
+
+	d, _ := json.Marshal(parser.Parse(lex.Lex(string(a))))
+	fmt.Println(string(d))
 
 }
