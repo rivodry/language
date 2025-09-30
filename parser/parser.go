@@ -33,25 +33,13 @@ func (p *Parser) eat(expected string) lex.Token {
 }
 
 func (p *Parser) parseExpr() any {
-	node := p.parseTerm()
-
-	for p.current().Typ == "+" || p.current().Typ == "-" {
-		op := p.current().Typ
-		p.eat(op)
-		right := p.parseTerm()
-		node = &ast.BinNode{
-			Op:    op,
-			Left:  node,
-			Right: right,
-		}
-	}
-	return node
+	return p.parseTerm()
 }
 
 func (p *Parser) parseTerm() any {
 	node := p.parseFactor()
 
-	for p.current().Typ == "*" || p.current().Typ == "/" {
+	for p.current().Typ == "+" || p.current().Typ == "-" {
 		op := p.current().Typ
 		p.eat(op)
 		right := p.parseFactor()
@@ -65,6 +53,21 @@ func (p *Parser) parseTerm() any {
 }
 
 func (p *Parser) parseFactor() any {
+	node := p.parseOperand()
+
+	for p.current().Typ == "*" || p.current().Typ == "/" {
+		op := p.current().Typ
+		p.eat(op)
+		right := p.parseOperand()
+		node = &ast.BinNode{
+			Op:    op,
+			Left:  node,
+			Right: right,
+		}
+	}
+	return node
+}
+func (p *Parser) parseOperand() any {
 	tok := p.current()
 
 	switch tok.Typ {
