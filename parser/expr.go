@@ -53,12 +53,12 @@ func (p *Parser) parseTerm() any {
 }
 
 func (p *Parser) parseFactor() any {
-	node := p.parseOperand()
+	node := p.parseUnary()
 
 	for p.current().Typ == "*" || p.current().Typ == "/" {
 		op := p.current().Typ
 		p.eat(op)
-		right := p.parseOperand()
+		right := p.parseUnary()
 		node = &ast.BinNode{
 			Op:    op,
 			Left:  node,
@@ -66,6 +66,21 @@ func (p *Parser) parseFactor() any {
 		}
 	}
 	return node
+}
+func (p *Parser) parseUnary() any {
+	if p.current().Typ == "-" || p.current().Typ == "NOT" {
+		op := p.current().Typ
+
+		p.eat(op)
+		right := p.parseUnary()
+		return ast.UnaryNode{
+			Op:    op,
+			Value: right,
+		}
+
+	}
+	return p.parseOperand()
+
 }
 func (p *Parser) parseOperand() any {
 	tok := p.current()

@@ -11,3 +11,7 @@ type NumNode struct {
 type IdentNode struct {
 	Ident string
 }
+type UnaryNode struct {
+	Op    string
+	Value any
+}
