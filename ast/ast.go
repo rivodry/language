@@ -18,3 +18,7 @@ type UnaryNode struct {
 type ExpressionStatement struct {
 	Expr any
 }
+type VarNode struct {
+	Name string
+	Init any
+}
