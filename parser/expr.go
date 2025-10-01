@@ -1,11 +1,41 @@
 package parser
 
-import "lang/ast"
+import (
+	"lang/ast"
+	"slices"
+)
 
 func (p *Parser) parseExpr() any {
-	return p.parseTerm()
+	return p.parseEquality()
 }
-
+func (p *Parser) parseEquality() any {
+	expr := p.parseComparision()
+	for p.current().Typ == "!=" || p.current().Typ == "==" {
+		op := p.current().Typ
+		p.eat(op)
+		right := p.parseComparision()
+		expr = &ast.BinNode{
+			Op:    op,
+			Left:  expr,
+			Right: right,
+		}
+	}
+	return expr
+}
+func (p *Parser) parseComparision() any {
+	expr := p.parseTerm()
+	for slices.Contains([]string{">", "<", ">=", "<="}, p.current().Typ) {
+		op := p.current().Typ
+		p.eat(op)
+		right := p.parseTerm()
+		expr = &ast.BinNode{
+			Op:    op,
+			Right: right,
+			Left:  expr,
+		}
+	}
+	return expr
+}
 func (p *Parser) parseTerm() any {
 	node := p.parseFactor()
 
