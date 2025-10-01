@@ -8,7 +8,7 @@ func Parse(tokens []lex.Token) []any {
 	p := &Parser{tokens: tokens}
 	statements := []any{}
 	for !(p.current().Typ == "EOF") {
-		statements = append(statements, p.parseStatement())
+		statements = append(statements, p.parseDeclaration())
 	}
 	return statements
 }

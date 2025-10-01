@@ -93,6 +93,10 @@ func IdentOrKeyWord(str string) Token {
 		{
 			return Token{"NOT", ""}
 		}
+	case "var":
+		{
+			return Token{"VAR", ""}
+		}
 
 	default:
 		{
@@ -103,7 +107,7 @@ func IdentOrKeyWord(str string) Token {
 func Lex(Set string) []Token {
 	var Tokens []Token
 	for i := 0; i < len(Set); {
-		if unicode.IsSpace(rune(Set[i])) {
+		if unicode.IsSpace(rune(Set[i])) && rune(Set[i]) != '\n' {
 			i++
 			continue
 		} else if unicode.IsLetter(rune(Set[i])) || Set[i] == '_' {
@@ -147,7 +151,7 @@ func Lex(Set string) []Token {
 
 			}
 
-		} else if rune(Set[i]) == ';' {
+		} else if rune(Set[i]) == '\n' {
 			i++
 			Tokens = append(Tokens, Token{"TERM", ""})
 		} else {
