@@ -26,3 +26,7 @@ type SetNode struct {
 	Name string
 	Set  any
 }
+type IfNode struct {
+	If   any
+	Then []any
+}

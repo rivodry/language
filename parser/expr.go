@@ -8,6 +8,7 @@ import (
 func (p *Parser) parseExpr() any {
 	return p.parseEquality()
 }
+
 func (p *Parser) parseEquality() any {
 	expr := p.parseComparision()
 	for p.current().Typ == "!=" || p.current().Typ == "==" {

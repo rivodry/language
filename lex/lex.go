@@ -117,9 +117,11 @@ func Lex(Set string) []Token {
 		} else if unicode.IsLetter(rune(Set[i])) || Set[i] == '_' {
 			str := ParseIdent(&i, Set)
 			Tokens = append(Tokens, IdentOrKeyWord(str))
+
 		} else if unicode.IsDigit(rune(Set[i])) {
 			num := ParseNumber(&i, Set)
 			Tokens = append(Tokens, Token{"NUMBER", num})
+
 		} else if rune(Set[i]) == '"' {
 			str := ParseString(&i, Set)
 			Tokens = append(Tokens, Token{"STRING", str})
@@ -155,7 +157,7 @@ func Lex(Set string) []Token {
 
 			}
 
-		} else if rune(Set[i]) == '\n' {
+		} else if rune(Set[i]) == ';' {
 			i++
 			Tokens = append(Tokens, Token{"TERM", ""})
 		} else {
