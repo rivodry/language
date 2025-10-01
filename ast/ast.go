@@ -22,3 +22,7 @@ type VarNode struct {
 	Name string
 	Init any
 }
+type SetNode struct {
+	Name string
+	Set  any
+}

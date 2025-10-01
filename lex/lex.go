@@ -97,6 +97,10 @@ func IdentOrKeyWord(str string) Token {
 		{
 			return Token{"VAR", ""}
 		}
+	case "set":
+		{
+			return Token{"SET", ""}
+		}
 
 	default:
 		{
