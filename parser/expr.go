@@ -98,6 +98,6 @@ func (p *Parser) parseOperand() any {
 		p.eat(")")
 		return expr
 	default:
-		panic("Unexpected token in factor: " + tok.Typ)
+		panic("Unexpected token in operand: " + tok.Typ)
 	}
 }

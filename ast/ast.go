@@ -15,3 +15,6 @@ type UnaryNode struct {
 	Op    string
 	Value any
 }
+type ExpressionStatement struct {
+	Expr any
+}
