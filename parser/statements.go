@@ -6,7 +6,7 @@ func (p *Parser) parseStatement() any {
 	switch p.current().Typ {
 	case "IF":
 		{
-			print("hi")
+
 			return p.parseIfStatement()
 		}
 	default:

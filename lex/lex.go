@@ -117,19 +117,31 @@ func Lex(Set string) []Token {
 		} else if unicode.IsLetter(rune(Set[i])) || Set[i] == '_' {
 			str := ParseIdent(&i, Set)
 			Tokens = append(Tokens, IdentOrKeyWord(str))
+			if (i < len(Set) && rune(Set[i]) == '\n') && Tokens[len(Tokens)-1].Typ == "IDENT" {
+				Tokens = append(Tokens, Token{"TERM", ""})
+			}
 
 		} else if unicode.IsDigit(rune(Set[i])) {
 			num := ParseNumber(&i, Set)
 			Tokens = append(Tokens, Token{"NUMBER", num})
+			if i < len(Set) && rune(Set[i]) == '\n' {
+				Tokens = append(Tokens, Token{"TERM", ""})
+			}
 
 		} else if rune(Set[i]) == '"' {
 			str := ParseString(&i, Set)
 			Tokens = append(Tokens, Token{"STRING", str})
+			if i < len(Set) && rune(Set[i]) == '\n' {
+				Tokens = append(Tokens, Token{"TERM", ""})
+			}
 
 		} else if slices.Contains([]rune{'(', ')'}, rune(Set[i])) {
 
 			Tokens = append(Tokens, Token{string(Set[i]), ""})
 			i++
+			if i < len(Set) && rune(Set[i]) == '\n' && rune(Set[i-1]) == ')' {
+				Tokens = append(Tokens, Token{"TERM", ""})
+			}
 
 		} else if slices.Contains([]rune{'+', '-', '/', '*'}, rune(Set[i])) {
 			Tokens = append(Tokens, Token{string(Set[i]), ""})
@@ -157,7 +169,7 @@ func Lex(Set string) []Token {
 
 			}
 
-		} else if rune(Set[i]) == ';' {
+		} else if rune(Set[i]) == '!' {
 			i++
 			Tokens = append(Tokens, Token{"TERM", ""})
 		} else {
