@@ -169,7 +169,7 @@ func Lex(Set string) []Token {
 
 			}
 
-		} else if rune(Set[i]) == '!' {
+		} else if rune(Set[i]) == ';' {
 			i++
 			Tokens = append(Tokens, Token{"TERM", ""})
 		} else {

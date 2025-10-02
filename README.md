@@ -32,3 +32,5 @@ while a==2 do
    print("hi")
 end
 ```
+# Internals
+`;` is optional, it is added by the lexer at the end of some lines
