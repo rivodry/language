@@ -9,6 +9,7 @@ func (p *Parser) parseStatement() any {
 
 			return p.parseIfStatement()
 		}
+
 	default:
 		{
 			return p.parseExpressionStatement()
@@ -35,6 +36,7 @@ func (p *Parser) parseIfStatement() any {
 
 	}
 	p.eat("END")
+
 	return ast.IfNode{
 		If:   expr,
 		Then: a,
