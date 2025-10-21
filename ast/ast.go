@@ -29,4 +29,5 @@ type SetNode struct {
 type IfNode struct {
 	If   any
 	Then []any
+	Else []any
 }

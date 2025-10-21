@@ -36,19 +36,7 @@ func (p *Parser) parseIfStatement() any {
 
 	}
 	p.eat("END")
-	elses := []any{}
-	if p.current().Typ == "ELSE" {
-		p.eat("ELSE")
-		p.eat("THEN")
 
-		for p.current().Typ != "END" && p.current().Typ != "EOF" {
-
-			elses = append(elses, p.parseDeclaration())
-
-		}
-		p.eat("END")
-
-	}
 	return ast.IfNode{
 		If:   expr,
 		Then: a,
